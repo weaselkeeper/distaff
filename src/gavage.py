@@ -8,6 +8,7 @@ Author: Jim Richardson
 email: weaselkeeper@gmail.com
 
 """
+PROJECTNAME='someproject'
 import os
 import sys
 from ConfigParser import SafeConfigParser
@@ -24,11 +25,11 @@ logging.basicConfig(level=logging.WARN,
 
 console = logging.StreamHandler(sys.stderr)
 console.setLevel(logging.WARN)
-logging.getLogger("gavage").addHandler(console)
-log = logging.getLogger("gavage")
+logging.getLogger(PROJECTNAME).addHandler(console)
+log = logging.getLogger(PROJECTNAME)
 
 ### Set some variables and constants.
-CONFIGFILE = '/etc/distaff/gavage.conf'
+CONFIGFILE = '/etc/distaff/' + PROJECTNAME +'.conf'
 
 
 def get_config(args,CONFIGFILE):
@@ -61,7 +62,7 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(
-        description='Inventory system')
+        description='Someproject does something')
     parser.add_argument('-n', '--dry-run', dest='dryrun',
         action='store_true', help='Dry run, do not actually perform action',
         default=False)
@@ -76,7 +77,7 @@ if __name__ == "__main__":
         help='Specify a path to an alternate config file')
 
     args = parser.parse_args()
-    args.usage = "gavage.py [options]"
+    args.usage = PROJECTNAME + ".py [options]"
 
 
     if args.debug:
