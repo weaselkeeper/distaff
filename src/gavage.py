@@ -8,7 +8,7 @@ Author: Jim Richardson
 email: weaselkeeper@gmail.com
 
 """
-PROJECTNAME='someproject'
+PROJECTNAME='distaff'
 import os
 import sys
 from ConfigParser import SafeConfigParser
@@ -29,7 +29,7 @@ logging.getLogger(PROJECTNAME).addHandler(console)
 log = logging.getLogger(PROJECTNAME)
 
 ### Set some variables and constants.
-CONFIGFILE = '/etc/distaff/' + PROJECTNAME +'.conf'
+CONFIGFILE = '/etc/' + PROJECTNAME +'/' + PROJECTNAME +'.conf'
 
 
 def get_config(args,CONFIGFILE):
@@ -41,15 +41,6 @@ def get_config(args,CONFIGFILE):
     else:
         log.warn('No config file found at %s' % CONFIGFILE)
         sys.exit(1)
-    try:
-        if args.repo:
-            repo = args.repo
-        else:
-            repo = parser.get('Repomonger','repo')
-    except:
-        log.warn('config parse failed')
-        sys.exit(1)
-    log.warn('building repo %s' % repo)
     parser.read(config)
     return parser
 
@@ -63,13 +54,13 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(
         description='Someproject does something')
-    parser.add_argument('-n', '--dry-run', dest='dryrun',
+    parser.add_argument('-n', '--dryrun',
         action='store_true', help='Dry run, do not actually perform action',
         default=False)
-    parser.add_argument('-d', '--debug', dest='debug',
+    parser.add_argument('-d', '--debug',
         action='store_true', help='Enable debugging during execution.',
         default=None)
-    parser.add_argument('-r', '--readable', dest='human_readable',
+    parser.add_argument('-r', '--readable',
         action='store_true', default=False,
         help='Display output in human readable formant (as opposed to json).')
     parser.add_argument('-c', '--config',
