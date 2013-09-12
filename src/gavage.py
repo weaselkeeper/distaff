@@ -7,6 +7,8 @@ License: GPL V2 See LICENSE file
 Author: Jim Richardson
 email: weaselkeeper@gmail.com
 
+gavage stuffs data it is handed, into a mongo collection.
+
 """
 PROJECTNAME='distaff'
 import os
@@ -23,13 +25,15 @@ logging.basicConfig(level=logging.WARN,
                     format='%(asctime)s %(levelname)s - %(message)s',
                     datefmt='%y.%m.%d %H:%M:%S')
 
+# Setup logging to console by default
+
 console = logging.StreamHandler(sys.stderr)
 console.setLevel(logging.WARN)
 logging.getLogger(PROJECTNAME).addHandler(console)
 log = logging.getLogger(PROJECTNAME)
 
-### Set some variables and constants.
-CONFIGFILE = '/etc/' + PROJECTNAME +'/' + PROJECTNAME +'.conf'
+### Set some default variables and constants.
+CONFIGFILE = os.path.join('/etc', PROJECTNAME,PROJECTNAME +'.conf')
 
 
 def get_config(args,CONFIGFILE):
@@ -41,30 +45,35 @@ def get_config(args,CONFIGFILE):
     else:
         log.warn('No config file found at %s' % CONFIGFILE)
         sys.exit(1)
+    try:
+        if args.repo:
+            repo = args.repo
+        else:
+            repo = parser.get('Repomonger','repo')
+    except:
+        log.warn('config parse failed')
+        sys.exit(1)
+    log.warn('building repo %s' % repo)
     parser.read(config)
     return parser
 
 
-
 # Here we start if called directly (the usual case.)
 if __name__ == "__main__":
-    """This is where we will begin when called from CLI"""
+    """This is where we will begin when called from CLI. No need for argparse
+    unless being called interactively, so import it here"""
 
     import argparse
 
     parser = argparse.ArgumentParser(
         description='Someproject does something')
-    parser.add_argument('-n', '--dryrun',
-        action='store_true', help='Dry run, do not actually perform action',
-        default=False)
-    parser.add_argument('-d', '--debug',
-        action='store_true', help='Enable debugging during execution.',
-        default=None)
-    parser.add_argument('-r', '--readable',
-        action='store_true', default=False,
+    parser.add_argument('-n', '--dryrun', action='store_true',
+        help='Dry run, do not actually perform action', default=False)
+    parser.add_argument('-d', '--debug', action='store_true',
+        help='Enable debugging during execution.', default=None)
+    parser.add_argument('-r', '--readable', action='store_true', default=False,
         help='Display output in human readable formant (as opposed to json).')
-    parser.add_argument('-c', '--config',
-        action='store', default=None,
+    parser.add_argument('-c', '--config', action='store', default=None,
         help='Specify a path to an alternate config file')
 
     args = parser.parse_args()
