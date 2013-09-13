@@ -53,6 +53,14 @@ def connectDB(args):
         log.warn("Something went wrong with connecting to %s on %" % (collection,host))
     return col
 
+def update(collection, host):
+    """ host is a dict, containing free form info, only required entry is
+    host:hostname """
+    log.debug('In update')
+    #Blah blah blah, some mongodb stuff here, needs more thinking FIXME
+
+
+
 def get_config(args,CONFIGFILE):
     # Now parse the config file.  Get any and all info from config file.
     parser = SafeConfigParser()
