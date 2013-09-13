@@ -46,14 +46,14 @@ def get_config(args,CONFIGFILE):
         log.warn('No config file found at %s' % CONFIGFILE)
         sys.exit(1)
     try:
-        if args.repo:
-            repo = args.repo
+        if args.mongodbhost:
+            mongodb-host = args.mongodb-host
         else:
-            repo = parser.get('Repomonger','repo')
+            mongodb-host = parser.get('mongodb-host','host')
     except:
         log.warn('config parse failed')
         sys.exit(1)
-    log.warn('building repo %s' % repo)
+    log.warn('Using %s for mongodb' % mongodb-host)
     parser.read(config)
     return parser
 
@@ -75,6 +75,8 @@ if __name__ == "__main__":
         help='Display output in human readable formant (as opposed to json).')
     parser.add_argument('-c', '--config', action='store', default=None,
         help='Specify a path to an alternate config file')
+    parser.add_argument('-d','--mongodbhost', action='store'
+        help='Host that holds the mongodb collections')
 
     args = parser.parse_args()
     args.usage = PROJECTNAME + ".py [options]"
