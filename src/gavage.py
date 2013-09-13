@@ -36,6 +36,23 @@ log = logging.getLogger(PROJECTNAME)
 CONFIGFILE = os.path.join('/etc', PROJECTNAME,PROJECTNAME +'.conf')
 
 
+def connectDB(args):
+    """ Open a connection to the mongodb, need the host, the collection name,
+    and the dbname """
+    host = args.mongodb_host
+    log.debug("connecting to mongo db host %s" % host)
+    database = args.dbname
+    log.debug("connecting to db %s" % database)
+    collection = args.collection
+    log.debug("Using collection name %s" % collection)
+    try:
+        con = Connection(host)
+        col = con[database][collecion]
+        log.debug('selecting database/collection: %s/%s' % (database, collection))
+    except:
+        log.warn("Something went wrong with connecting to %s on %" % (collection,host))
+    return col
+
 def get_config(args,CONFIGFILE):
     # Now parse the config file.  Get any and all info from config file.
     parser = SafeConfigParser()
