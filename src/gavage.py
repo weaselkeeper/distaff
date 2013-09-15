@@ -21,19 +21,23 @@ except ImportError as e:
     print 'Failed import of pymmongo, system says %s' % e
     sys.exit(1)
 
-logging.basicConfig(level=logging.WARN,
-                    format='%(asctime)s %(levelname)s - %(message)s',
-                    datefmt='%y.%m.%d %H:%M:%S')
 
-# Setup logging to console by default
+def run():
 
-console = logging.StreamHandler(sys.stderr)
-console.setLevel(logging.WARN)
-logging.getLogger(PROJECTNAME).addHandler(console)
-log = logging.getLogger(PROJECTNAME)
+    logging.basicConfig(level=logging.WARN,
+                        format='%(asctime)s %(levelname)s - %(message)s',
+                        datefmt='%y.%m.%d %H:%M:%S')
 
-### Set some default variables and constants.
-CONFIGFILE = os.path.join('/etc', PROJECTNAME,PROJECTNAME +'.conf')
+    # Setup logging to console by default
+
+    console = logging.StreamHandler(sys.stderr)
+    console.setLevel(logging.WARN)
+    logging.getLogger(PROJECTNAME).addHandler(console)
+    log = logging.getLogger(PROJECTNAME)
+
+    ### Set some default variables and constants.
+    CONFIGFILE = os.path.join('/etc', PROJECTNAME,PROJECTNAME +'.conf')
+    return log, CONFIGFILE
 
 
 def connectDB(args):
@@ -72,13 +76,13 @@ def get_config(args,CONFIGFILE):
         sys.exit(1)
     try:
         if args.mongodbhost:
-            mongodb-host = args.mongodb-host
+            mongodb_host = args.mongodbhost
         else:
-            mongodb-host = parser.get('mongodb-host','host')
+            mongodb_host = parser.get('mongodb_host','host')
     except:
         log.warn('config parse failed')
         sys.exit(1)
-    log.warn('Using %s for mongodb' % mongodb-host)
+    log.warn('Using %s for mongodb' % mongodb_host)
     parser.read(config)
     return parser
 
@@ -87,7 +91,7 @@ def get_config(args,CONFIGFILE):
 if __name__ == "__main__":
     """This is where we will begin when called from CLI. No need for argparse
     unless being called interactively, so import it here"""
-
+    log, config = run()
     import argparse
 
     parser = argparse.ArgumentParser(
@@ -100,7 +104,7 @@ if __name__ == "__main__":
         help='Display output in human readable formant (as opposed to json).')
     parser.add_argument('-c', '--config', action='store', default=None,
         help='Specify a path to an alternate config file')
-    parser.add_argument('-d','--mongodbhost', action='store'
+    parser.add_argument('-d','--mongodbhost', action='store',
         help='Host that holds the mongodb collections')
 
     args = parser.parse_args()
