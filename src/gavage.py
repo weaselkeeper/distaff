@@ -118,4 +118,4 @@ if __name__ == "__main__":
     if args.config:
         CONFIGFILE = args.config
 
-    _parse_config = get_config(args,CONFIGFILE)
+    _parse_config = get_config(args,config)
