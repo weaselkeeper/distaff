@@ -104,7 +104,7 @@ if __name__ == "__main__":
         help='Display output in human readable formant (as opposed to json).')
     parser.add_argument('-c', '--config', action='store', default=None,
         help='Specify a path to an alternate config file')
-    parser.add_argument('-d','--mongodbhost', action='store',
+    parser.add_argument('-m','--mongodbhost', action='store',
         help='Host that holds the mongodb collections')
 
     args = parser.parse_args()
