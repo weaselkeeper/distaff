@@ -74,16 +74,12 @@ def get_config(args,CONFIGFILE):
     else:
         log.warn('No config file found at %s' % CONFIGFILE)
         sys.exit(1)
-    try:
-        if args.mongodbhost:
-            mongodb_host = args.mongodbhost
-        else:
-            mongodb_host = parser.get('mongodb_host','host')
-    except:
-        log.warn('config parse failed')
-        sys.exit(1)
-    log.warn('Using %s for mongodb' % mongodb_host)
     parser.read(config)
+    if args.mongodbhost:
+        mongodb_host = args.mongodbhost
+    else:
+        mongodb_host = parser.get('mongodb_host','host')
+    log.warn('Using %s for mongodb' % mongodb_host)
     return parser
 
 
