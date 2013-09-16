@@ -91,7 +91,6 @@ def get_config(args,CONFIGFILE):
 if __name__ == "__main__":
     """This is where we will begin when called from CLI. No need for argparse
     unless being called interactively, so import it here"""
-    log, config = run()
     import argparse
 
     parser = argparse.ArgumentParser(
@@ -110,12 +109,14 @@ if __name__ == "__main__":
     args = parser.parse_args()
     args.usage = PROJECTNAME + ".py [options]"
 
+    log, config = run()
 
     if args.debug:
         log.setLevel(logging.DEBUG)
     else:
         log.setLevel(logging.WARN)
+
     if args.config:
-        CONFIGFILE = args.config
+        config = args.config
 
     _parse_config = get_config(args,config)
