@@ -22,23 +22,25 @@ except ImportError as e:
     sys.exit(1)
 
 
-def run():
 
-    logging.basicConfig(level=logging.WARN,
-                        format='%(asctime)s %(levelname)s - %(message)s',
-                        datefmt='%y.%m.%d %H:%M:%S')
+# Basic logging setup
+logging.basicConfig(level=logging.WARN,
+                    format='%(asctime)s %(levelname)s - %(message)s',
+                    datefmt='%y.%m.%d %H:%M:%S')
 
-    # Setup logging to console by default
+# Setup logging to console by default
 
-    console = logging.StreamHandler(sys.stderr)
-    console.setLevel(logging.WARN)
-    logging.getLogger(PROJECTNAME).addHandler(console)
-    log = logging.getLogger(PROJECTNAME)
+console = logging.StreamHandler(sys.stderr)
+console.setLevel(logging.WARN)
+logging.getLogger(PROJECTNAME).addHandler(console)
+log = logging.getLogger(PROJECTNAME)
 
-    ### Set some default variables and constants.
-    CONFIGFILE = os.path.join('/etc', PROJECTNAME,PROJECTNAME +'.conf')
-    return log, CONFIGFILE
+### Set some default variables and constants.
+config = os.path.join('/etc', PROJECTNAME,PROJECTNAME +'.conf')
 
+
+def run(args,config):
+    _parse_config = get_config(args,config)
 
 def connectDB(args):
     """ Open a connection to the mongodb, need the host, the collection name,
@@ -57,12 +59,12 @@ def connectDB(args):
         log.warn("Something went wrong with connecting to %s on %" % (collection,host))
     return col
 
+
 def update(collection, host):
     """ host is a dict, containing free form info, only required entry is
     host:hostname """
     log.debug('In update')
     #Blah blah blah, some mongodb stuff here, needs more thinking FIXME
-
 
 
 def get_config(args,CONFIGFILE):
@@ -105,8 +107,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     args.usage = PROJECTNAME + ".py [options]"
 
-    log, config = run()
-
     if args.debug:
         log.setLevel(logging.DEBUG)
     else:
@@ -115,4 +115,4 @@ if __name__ == "__main__":
     if args.config:
         config = args.config
 
-    _parse_config = get_config(args,config)
+    run(args,config)
