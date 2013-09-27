@@ -65,7 +65,7 @@ def update(collection, host):
     #Blah blah blah, some mongodb stuff here, needs more thinking FIXME
 
 
-def run(_args, _config):
+def run(_args, CONFIGFILE):
     # Now parse the config file.  Get any and all info from config file.
     parser = SafeConfigParser()
     configuration = {}
