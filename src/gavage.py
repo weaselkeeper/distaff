@@ -75,11 +75,11 @@ def run(_args, CONFIGFILE):
         log.warn('No config file found at %s' % CONFIGFILE)
         sys.exit(1)
     parser.read(config)
-    if args.mongodbhost:
-        mongodb_host = args.mongodbhost
+    if args.mongohost:
+        mongohost = args.mongohost
     else:
-        mongodb_host = parser.get('mongodb_host','host')
-    log.warn('Using %s for mongodb' % mongodb_host)
+        mongohost = parser.get('gavage','mongohost')
+    log.warn('Using %s for mongodb' % mongohost)
     return parser
 
 
@@ -99,7 +99,7 @@ if __name__ == "__main__":
         help='Display output in human readable formant (as opposed to json).')
     parser.add_argument('-c', '--config', action='store', default=None,
         help='Specify a path to an alternate config file')
-    parser.add_argument('-m','--mongodbhost', action='store',
+    parser.add_argument('-m','--mongohost', action='store',
         help='Host that holds the mongodb collections')
 
     args = parser.parse_args()
