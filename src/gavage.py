@@ -10,7 +10,7 @@ email: weaselkeeper@gmail.com
 gavage stuffs data it is handed, into a mongo collection.
 
 """
-PROJECTNAME='distaff'
+PROJECTNAME = 'distaff'
 import os
 import sys
 from ConfigParser import SafeConfigParser
@@ -36,13 +36,11 @@ logging.getLogger(PROJECTNAME).addHandler(console)
 log = logging.getLogger(PROJECTNAME)
 
 ### Set some default variables and constants.
-config = os.path.join('/etc', PROJECTNAME,PROJECTNAME +'.conf')
+config = os.path.join('/etc', PROJECTNAME, PROJECTNAME +'.conf')
 
 
-def run(args,config):
-    _parse_config = get_config(args,config)
 
-def connectDB(args):
+def connectDB(_args):
     """ Open a connection to the mongodb, need the host, the collection name,
     and the dbname """
     host = args.mongodb_host
@@ -67,7 +65,7 @@ def update(collection, host):
     #Blah blah blah, some mongodb stuff here, needs more thinking FIXME
 
 
-def get_config(args,CONFIGFILE):
+def run(_args, _config):
     # Now parse the config file.  Get any and all info from config file.
     parser = SafeConfigParser()
     configuration = {}
