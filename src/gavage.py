@@ -67,20 +67,20 @@ def update(collection, host):
 
 def run(_args, CONFIGFILE):
     # Now parse the config file.  Get any and all info from config file.
-    parser = SafeConfigParser()
+    configparse = SafeConfigParser()
     configuration = {}
     if os.path.isfile(CONFIGFILE):
         config = CONFIGFILE
     else:
         log.warn('No config file found at %s' % CONFIGFILE)
         sys.exit(1)
-    parser.read(config)
+    configparse.read(config)
     if args.mongohost:
         mongohost = args.mongohost
     else:
-        mongohost = parser.get('gavage','mongohost')
+        mongohost = configparse.get('gavage','mongohost')
     log.warn('Using %s for mongodb' % mongohost)
-    return parser
+    return configparse
 
 
 # Here we start if called directly (the usual case.)
