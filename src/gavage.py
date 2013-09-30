@@ -67,6 +67,7 @@ def update(collection, host):
 
 def run(_args, CONFIGFILE):
     # Now parse the config file.  Get any and all info from config file.
+    log.debug('in Run, with %s and %s' % (_args, CONFIGFILE))
     configparse = SafeConfigParser()
     configuration = {}
     if os.path.isfile(CONFIGFILE):
@@ -77,9 +78,10 @@ def run(_args, CONFIGFILE):
     configparse.read(config)
     if args.mongohost:
         mongohost = args.mongohost
+        log.warn('mongohost is %s' % mongohost)
     else:
         mongohost = configparse.get('gavage','mongohost')
-    log.warn('Using %s for mongodb' % mongohost)
+    log.warn('Using host %s for mongodb' % mongohost)
     return configparse
 
 
