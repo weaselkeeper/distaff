@@ -54,22 +54,22 @@ def connectDB(_args):
         col = con[database][collection]
         log.debug('selecting database/collection: %s/%s' % (database, collection))
     except:
-        log.warn("Something went wrong with connecting to %s on %" % (collection, host))
+        log.warn("Something went wrong with connecting to %s on %s " % (collection, host))
     return col
 
 
 def update(collection, host):
     """ host is a dict, containing free form info, only required entry is
-    host:hostname """
+    host:hostname, of course, that's pretty useless, so more data in the same 
+    key:value syntax would be useful"""
     log.debug('In update')
     #Blah blah blah, some mongodb stuff here, needs more thinking FIXME
-
+    log.debug('exiting update')
 
 def run(_args, CONFIGFILE):
     # Now parse the config file.  Get any and all info from config file.
     log.debug('in Run, with %s and %s' % (_args, CONFIGFILE))
     configparse = SafeConfigParser()
-    configuration = {}
     if os.path.isfile(CONFIGFILE):
         config = CONFIGFILE
     else:
@@ -101,7 +101,7 @@ if __name__ == "__main__":
         help='Display output in human readable formant (as opposed to json).')
     parser.add_argument('-c', '--config', action='store', default=None,
         help='Specify a path to an alternate config file')
-    parser.add_argument('-m','--mongohost', action='store',
+    parser.add_argument('-m', '--mongohost', action='store',
         help='Host that holds the mongodb collections')
 
     args = parser.parse_args()
@@ -115,4 +115,4 @@ if __name__ == "__main__":
     if args.config:
         config = args.config
 
-    run(args,config)
+    run(args, config)
