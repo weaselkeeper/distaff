@@ -1,5 +1,5 @@
 Name:           distaff
-Version:        0.1
+Version:        %(git describe | sed -e 's/-/_/g')
 Release:        0
 Summary:        Inventory system
 License:        GPLv2
