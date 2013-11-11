@@ -7,7 +7,7 @@ Homepage: https://github.com/weaselkeeper/distaff
 Standards-Version: 3.9.2
 
 Package: distaff
-Version: 0.1
+Version: VERSION
 Maintainer: Jim Richardson <weaselkeeper@gmail.com>
 Depends: python
 Architecture: all
