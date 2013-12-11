@@ -22,6 +22,19 @@ except ImportError as e:
     sys.exit(1)
 
 
+import subprocess
+# We will use this to do the mongo stuff
+def runcmd(cmd):
+    """ run command, using subprocess and wait for return code """
+    proc = subprocess.Popen(cmd,
+            shell = True,
+            stdin = subprocess.PIPE,
+            stdout = subprocess.PIPE,
+            stderr = subprocess.PIPE)
+    result = proc.communicate()
+    return result.creturncode, output
+
+
 
 # Basic logging setup
 logging.basicConfig(level=logging.WARN,
