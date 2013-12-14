@@ -55,11 +55,11 @@ def runcmd(cmd):
 def connectDB(_args):
     """ Open a connection to the mongodb, need the host, the collection name,
     and the dbname """
-    host = args.mongodb_host
+    host = _args.mongodb_host
     log.debug("connecting to mongo db host %s" % host)
-    database = args.dbname
+    database = _args.dbname
     log.debug("connecting to db %s" % database)
-    collection = args.collection
+    collection = _args.collection
     log.debug("Using collection name %s" % collection)
     try:
         con = Connection(host)
@@ -88,8 +88,8 @@ def run(_args, CONFIGFILE):
         log.warn('No config file found at %s' % CONFIGFILE)
         sys.exit(1)
     configparse.read(config)
-    if args.mongohost:
-        mongohost = args.mongohost
+    if _args.mongohost:
+        mongohost = _args.mongohost
         log.warn('mongohost is %s' % mongohost)
     else:
         mongohost = configparse.get('gavage','mongohost')
