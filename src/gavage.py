@@ -41,17 +41,6 @@ log = logging.getLogger(PROJECTNAME)
 config = os.path.join('/etc', PROJECTNAME, PROJECTNAME +'.conf')
 
 
-def runcmd(cmd):
-    """ run command, using subprocess and wait for return code """
-    proc = subprocess.Popen(cmd,
-            shell = True,
-            stdin = subprocess.PIPE,
-            stdout = subprocess.PIPE,
-            stderr = subprocess.PIPE)
-    result = proc.communicate()
-    return result.returncode, output
-
-
 def connectDB(_args):
     """ Open a connection to the mongodb, need the host, the collection name,
     and the dbname """
