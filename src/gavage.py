@@ -68,15 +68,15 @@ def update(collection, host):
     log.debug('exiting update')
 
 def run(_args, CONFIGFILE):
-    # Now parse the config file.  Get any and all info from config file.
+    """ Now parse the config file.  Get any and all info from config file."""
     log.debug('in Run, with %s and %s' % (_args, CONFIGFILE))
     configparse = SafeConfigParser()
     if os.path.isfile(CONFIGFILE):
-        config = CONFIGFILE
+        _config = CONFIGFILE
     else:
         log.warn('No config file found at %s' % CONFIGFILE)
         sys.exit(1)
-    configparse.read(config)
+    configparse.read(_config)
     if _args.mongohost:
         mongohost = _args.mongohost
         log.warn('mongohost is %s' % mongohost)
@@ -88,8 +88,8 @@ def run(_args, CONFIGFILE):
 
 # Here we start if called directly (the usual case.)
 if __name__ == "__main__":
-    """This is where we will begin when called from CLI. No need for argparse
-    unless being called interactively, so import it here"""
+    # This is where we will begin when called from CLI. No need for argparse
+    # unless being called interactively, so import it here
     import argparse
 
     parser = argparse.ArgumentParser(
