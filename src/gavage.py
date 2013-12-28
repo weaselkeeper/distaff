@@ -49,7 +49,7 @@ def runcmd(cmd):
             stdout = subprocess.PIPE,
             stderr = subprocess.PIPE)
     result = proc.communicate()
-    return result.creturncode, output
+    return result.returncode, output
 
 
 def connectDB(_args):
