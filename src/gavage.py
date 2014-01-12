@@ -22,9 +22,6 @@ except ImportError as e:
     sys.exit(1)
 
 
-import subprocess
-# We will use this to do the mongo stuff
-
 # Basic logging setup
 logging.basicConfig(level=logging.WARN,
                     format='%(asctime)s %(levelname)s - %(message)s',
@@ -64,7 +61,7 @@ def update(collection, host):
     host:hostname, of course, that's pretty useless, so more data in the same 
     key:value syntax would be useful"""
     log.debug('In update')
-    #Blah blah blah, some mongodb stuff here, needs more thinking FIXME
+
     log.debug('exiting update')
 
 def run(_args, CONFIGFILE):
