@@ -60,8 +60,9 @@ def update(collection, host):
     """ host is a dict, containing free form info, only required entry is
     host:hostname, of course, that's pretty useless, so more data in the same 
     key:value syntax would be useful"""
-    log.debug('In update')
 
+    log.debug('In update')
+    log.debug('in collection %s working on host $s' %(collection, host))
     log.debug('exiting update')
 
 def run(_args, CONFIGFILE):
