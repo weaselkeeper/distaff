@@ -62,7 +62,7 @@ def update(collection, host):
     key:value syntax would be useful"""
 
     log.debug('In update')
-    log.debug('in collection %s working on host $s' %(collection, host))
+    log.debug('in collection %s working on host %s' %(collection, host))
     log.debug('exiting update')
 
 def run(_args, CONFIGFILE):
