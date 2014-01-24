@@ -35,52 +35,55 @@ logging.getLogger(PROJECTNAME).addHandler(console)
 log = logging.getLogger(PROJECTNAME)
 
 ### Set some default variables and constants.
-config = os.path.join('/etc', PROJECTNAME, PROJECTNAME +'.conf')
+config = os.path.join('/etc', PROJECTNAME, PROJECTNAME + '.conf')
 
 
 def connectDB(_args):
     """ Open a connection to the mongodb, need the host, the collection name,
     and the dbname """
     host = _args.mongodb_host
-    log.debug("connecting to mongo db host %s" % host)
+    log.debug("connecting to mongo db host %s", host)
     database = _args.dbname
-    log.debug("connecting to db %s" % database)
+    log.debug("connecting to db %s", database)
     collection = _args.collection
-    log.debug("Using collection name %s" % collection)
+    log.debug("Using collection name %s", collection)
     try:
         con = Connection(host)
         col = con[database][collection]
-        log.debug('selecting database/collection: %s/%s' % (database, collection))
+        log.debug('selecting database/collection: %s/%s',
+                  database, collection)
     except:
-        log.warn("Something went wrong with connecting to %s on %s " % (collection, host))
+        log.warn("Something went wrong with connecting to %s on %s ",
+                 collection, host)
     return col
 
 
 def update(collection, host):
     """ host is a dict, containing free form info, only required entry is
-    host:hostname, of course, that's pretty useless, so more data in the same 
+    host:hostname, of course, that's pretty useless, so more data in the same
     key:value syntax would be useful"""
 
     log.debug('In update')
-    log.debug('in collection %s working on host %s' %(collection, host))
+    log.debug('in collection %s working on host %s', collection, host)
     log.debug('exiting update')
+
 
 def run(_args, CONFIGFILE):
     """ Now parse the config file.  Get any and all info from config file."""
-    log.debug('in Run, with %s and %s' % (_args, CONFIGFILE))
+    log.debug('in Run, with %s and %s', _args, CONFIGFILE)
     configparse = SafeConfigParser()
     if os.path.isfile(CONFIGFILE):
         _config = CONFIGFILE
     else:
-        log.warn('No config file found at %s' % CONFIGFILE)
+        log.warn('No config file found at %s', CONFIGFILE)
         sys.exit(1)
     configparse.read(_config)
     if _args.mongohost:
         mongohost = _args.mongohost
-        log.warn('mongohost is %s' % mongohost)
+        log.warn('mongohost is %s', mongohost)
     else:
-        mongohost = configparse.get('gavage','mongohost')
-    log.warn('Using host %s for mongodb' % mongohost)
+        mongohost = configparse.get('gavage', 'mongohost')
+    log.warn('Using host %s for mongodb', mongohost)
     return configparse
 
 
