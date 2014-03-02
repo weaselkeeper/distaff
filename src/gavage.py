@@ -113,4 +113,4 @@ if __name__ == "__main__":
     if args.config:
         config = args.config
 
-    run(args, config)
+    sys.exit(run(args, config))
