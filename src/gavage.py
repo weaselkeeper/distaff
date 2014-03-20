@@ -53,17 +53,6 @@ def connectDB(_args):
               database, collection)
     return col
 
-
-def update(collection, host):
-    """ host is a dict, containing free form info, only required entry is
-    host:hostname, of course, that's pretty useless, so more data in the same
-    key:value syntax would be useful"""
-
-    log.debug('In update')
-    log.debug('in collection %s working on host %s', collection, host)
-    log.debug('exiting update')
-
-
 def run(_args, CONFIGFILE):
     """ Now parse the config file.  Get any and all info from config file."""
     log.debug('in Run, with %s and %s', _args, CONFIGFILE)
@@ -75,20 +64,21 @@ def run(_args, CONFIGFILE):
         sys.exit(1)
     configparse.read(_config)
     if _args.mongohost:
-        mongohost = _args.mongohost
-        log.warn('mongohost is %s', mongohost)
+        _args.mongohost = _args.mongohost
     else:
-        mongohost = configparse.get('gavage', 'mongohost')
-    log.warn('Using host %s for mongodb', mongohost)
+        _args.mongohost = configparse.get('gavage', 'mongohost')
+    log.debug('using host %s for mongodb', _args.mongohost)
 
-    db = configparse.get('gavage', 'dbname')
-    collection = configparse.get('gavage', 'collection')
-    user = configparse.get('gavage', 'user')
-    passwd = configparse.get('gavage', 'passwd')
-    print db, collection, user, passwd
+    _args.dbname = configparse.get('gavage', 'dbname')
+
+    _args.collection = configparse.get('gavage', 'collection')
+    _args.user = configparse.get('gavage', 'user')
+    _args.passwd = configparse.get('gavage', 'passwd')
+    log.debug(_args)
+    col = connectDB
 
 
-def update(collection, newhostdata, host):
+def update(col, newhostdata, host):
     """ updating info for host """
     log.debug('in update')
 
