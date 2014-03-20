@@ -80,8 +80,28 @@ def run(_args, CONFIGFILE):
     else:
         mongohost = configparse.get('gavage', 'mongohost')
     log.warn('Using host %s for mongodb', mongohost)
-    return configparse
 
+    db = configparse.get('gavage', 'dbname')
+    collection = configparse.get('gavage', 'collection')
+    user = configparse.get('gavage', 'user')
+    passwd = configparse.get('gavage', 'passwd')
+    print db, collection, user, passwd
+
+
+def update(collection, newhostdata, host):
+    """ updating info for host """
+    log.debug('in update')
+
+    cursor = collection.find({'_id': host })
+
+    collection.update(
+            {'_id': host},
+            {'$set': {
+                newhostdata
+                    }
+                },upsert=True
+            )
+    return
 
 # Here we start if called directly (the usual case.)
 if __name__ == "__main__":
