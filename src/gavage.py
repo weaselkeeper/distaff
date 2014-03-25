@@ -53,6 +53,7 @@ def connectDB(_args):
               database, collection)
     return col
 
+
 def run(_args, CONFIGFILE):
     """ Now parse the config file.  Get any and all info from config file."""
     log.debug('in Run, with %s and %s', _args, CONFIGFILE)
