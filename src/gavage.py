@@ -44,7 +44,7 @@ gavage stuffs data it is handed, into a mongo collection.
 PROJECTNAME = 'distaff'
 import os
 import sys
-from ConfigParser import SafeConfigParser
+import ConfigParser
 import logging
 try:
     from pymongo import Connection
@@ -88,7 +88,7 @@ def connectDB(_args):
 def run(_args, CONFIGFILE):
     """ Now parse the config file.  Get any and all info from config file."""
     log.debug('in Run, with %s and %s', _args, CONFIGFILE)
-    configparse = SafeConfigParser()
+    configparse = ConfigParser.SafeConfigParser()
     if os.path.isfile(CONFIGFILE):
         _config = CONFIGFILE
     else:
