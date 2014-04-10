@@ -1,0 +1,21 @@
+server( "00.00.00.1", "hadoop-namenode.corp.sea1.cmates.com",
+    hostname="hadoop-namenode.corp.foo.com",
+    stage="corp",
+    provider="hw",
+    groups=['hadoop','hadoop-namenode'],
+    status="corp hadoop cluster.",
+    description="",
+    variables=dict(
+        ),
+    )
+
+server( "00.00.00.2",
+    "yet another hadoop box",
+    hostname="hadoop-data01.prod.foo.com",
+    stage="prod",
+    provider="hardware",
+    groups=['base', 'hadoop', 'hadoop-datanode'],
+    status="prod hadoop cluster",
+    description="",
+    variables={'sr_revision': 'prod', 'w2p_password': 'hash_removed'}
+    )
