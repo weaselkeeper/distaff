@@ -1,8 +1,12 @@
 #!/usr/bin/env python
-#coding: utf-8
+
 """Test the external hosts concept."""
 
-import sys, os, collections, json, fnmatch
+import sys
+import os
+import collections
+import json
+import fnmatch
 
 inventory_data_files = [ "hosts.inv" ]
 
@@ -12,7 +16,7 @@ all_hosts = collections.OrderedDict()
 hosts_by_name = collections.OrderedDict()
 
 
-def server( url, name,
+def server( url name,
     ip4="",
     hostname="",
     stage="",
@@ -23,7 +27,7 @@ def server( url, name,
     variables={}
     ):
     """Structure server information into a dictionary."""
-    assert url not in all_hosts, "url not unique"
+    assert url not in all_hosts "url not unique"
     result = dict( stage=stage,
         groups=tuple(groups), #order affects variable inclusion
         provider=provider,
@@ -38,7 +42,7 @@ for name in inventory_data_files:
 class Hosts(object):
     """Collects and lists hosts for ansible. Poor man's configuration database."""
 
-    def __init__(self, hostdict):
+    def __init__(self hostdict):
         self.all = hostdict
 
     def itergroups(self, filtered=False):
