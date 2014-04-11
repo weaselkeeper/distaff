@@ -24,13 +24,13 @@ def server( url, name,
     ):
     """Structure server information into a dictionary."""
     assert url not in all_hosts, "url not unique"
-    result = dict( stage=stage, 
+    result = dict( stage=stage,
         groups=tuple(groups), #order affects variable inclusion
-        provider=provider, 
-        url=url, 
-        hostname=hostname or url, 
+        provider=provider,
+        url=url,
+        hostname=hostname or url,
         variables = variables)
-    all_hosts[url] = result 
+    all_hosts[url] = result
 
 for name in inventory_data_files:
     execfile( name)
@@ -57,7 +57,7 @@ class Hosts(object):
         ANSIBLE_GROUPFILTER = comma,separated,group,names
         ANSIBLE_HOSTFILTER = hostnameglob
         These are AND filters if specified.
-        
+
         yields: key, value
         """
         stage = os.getenv("ANSIBLE_STAGEFILTER")
@@ -78,10 +78,10 @@ class Hosts(object):
 #                if bool( groups & mygroups):
 #                    pass
 #                    #info[groups] = groups & mygroups #hide groups filtered out?
-#                else: 
+#                else:
 #                    return False
             #filter by hostname/url
-            return fnmatch.fnmatchcase(info["url"],hosts) or fnmatch.fnmatchcase(info["hostname"],hosts) 
+            return fnmatch.fnmatchcase(info["url"],hosts) or fnmatch.fnmatchcase(info["hostname"],hosts)
             #return True
 
         for url, info in self.all.items():
@@ -96,7 +96,7 @@ class Hosts(object):
             else:
                 result[group].append(url)
         return result
-         
+
     def listgroups(self):
         return json.dumps(self.groups(filtered=True))
 
@@ -116,14 +116,14 @@ class Hosts(object):
 
     def listvars( self, url):
         self.injectvars(url) #add group and instance info into vars
-        return json.dumps(self.all[url]["variables"]) 
+        return json.dumps(self.all[url]["variables"])
 
     def report( self, format="text"):
         #import pdb; pdb.set_trace()
         for url, info in self.all.items():
             info["groups"] = list( info["groups"])
             repr_format = """\
-server( "%(url)s", 
+server( "%(url)s",
     "name",
     hostname="%(hostname)s",
     stage="%(stage)s",
@@ -141,10 +141,10 @@ server( "%(url)s",
 def fail( msg, *args):
     print msg
     sys.exit(1)
-    
+
 def run():
     args = sys.argv
-    if len(args) < 2: 
+    if len(args) < 2:
         print "supply --list, --host <host>, --report"
         sys.exit(1)
     try:
