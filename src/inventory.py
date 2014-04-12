@@ -8,41 +8,44 @@ import collections
 import json
 import fnmatch
 
-inventory_data_files = [ "hosts.inv" ]
+inventory_data_files = ["hosts.inv"]
 
-all_stages = ["dev","qa","prod"]
+all_stages = ["dev", "qa", "prod"]
 all_groups = collections.OrderedDict()
 all_hosts = collections.OrderedDict()
 hosts_by_name = collections.OrderedDict()
 
 
-def server( url name,
-    ip4="",
-    hostname="",
-    stage="",
-    provider="",
-    groups=[],
-    status="",
-    description="",
-    variables={}
-    ):
+def server(url, name,
+           ip4="",
+           hostname="",
+           stage="",
+           provider="",
+           groups=[],
+           status="",
+           description="",
+           variables={}
+           ):
     """Structure server information into a dictionary."""
-    assert url not in all_hosts "url not unique"
-    result = dict( stage=stage,
-        groups=tuple(groups), #order affects variable inclusion
-        provider=provider,
-        url=url,
-        hostname=hostname or url,
-        variables = variables)
+    if url not in all_hosts:
+        print "url not unique"
+    result = dict(stage=stage,
+                  groups=tuple(groups),  # order affects variable inclusion
+                  provider=provider,
+                  url=url,
+                  hostname=hostname or url,
+                  variables=variables)
     all_hosts[url] = result
 
 for name in inventory_data_files:
-    execfile( name)
+    execfile(name)
+
 
 class Hosts(object):
-    """Collects and lists hosts for ansible. Poor man's configuration database."""
+    """Collects and lists hosts for ansible.
+    Poor man's configuration database."""
 
-    def __init__(self hostdict):
+    def __init__(self, hostdict):
         self.all = hostdict
 
     def itergroups(self, filtered=False):
@@ -51,9 +54,9 @@ class Hosts(object):
         yields: url, group
         """
         hosts = self.filtered() if filtered else self.all
-        for url,info in hosts:
+        for url, info in hosts:
             for group in info["groups"]:
-                yield url,group
+                yield url, group
 
     def filtered(self):
         """yields all hosts' items, filtered by environment variables:
@@ -65,17 +68,19 @@ class Hosts(object):
         yields: key, value
         """
         stage = os.getenv("ANSIBLE_STAGEFILTER")
-        if stage == None:
-            raise StandardError("You must specify the ANSIBLE_STAGEFILTER environment variable.")
+        if stage is None:
+            raise StandardError("Must specify the ANSIBLE_STAGEFILTER env.")
         stages = stage.split(",")
         groups = os.getenv("ANSIBLE_GROUPFILTER")
         groups = set(groups.split(",")) if groups else set([])
 
-        hosts = os.getenv("ANSIBLE_HOSTFILTER","*")
+        hosts = os.getenv("ANSIBLE_HOSTFILTER", "*")
+
         def passes_filter(s):
             "s = server info dict"
             # filter by stage
-            if s["stage"] not in stages: return False
+            if s["stage"] not in stages:
+                return False
 #            # filter by groups
 #            mygroups = set(info["groups"])
 #            if bool(groups):
@@ -85,11 +90,11 @@ class Hosts(object):
 #                else:
 #                    return False
             #filter by hostname/url
-            return fnmatch.fnmatchcase(info["url"],hosts) or fnmatch.fnmatchcase(info["hostname"],hosts)
+            return fnmatch.fnmatchcase(info["url"], hosts) or fnmatch.fnmatchcase(info["hostname"], hosts)
             #return True
 
         for url, info in self.all.items():
-            if passes_filter( info):
+            if passes_filter(info):
                 yield (url, info)
 
     def groups(self, filtered=True):
@@ -104,25 +109,25 @@ class Hosts(object):
     def listgroups(self):
         return json.dumps(self.groups(filtered=True))
 
-    def injectvars(self,url):
+    def injectvars(self, url):
         info = self.all[url]
         explicit_vars = info["variables"]
-        infovars= dict( groups=",".join(info["groups"]),
-            url=info["url"],
-            hostname=info["hostname"],
-            provider=info["provider"],
-            )
+        infovars = dict(groups=",".join(info["groups"]),
+                        url=info["url"],
+                        hostname=info["hostname"],
+                        provider=info["provider"],
+                        )
         v = {}
         #inject group vars
-        v.update( infovars)
-        v.update( explicit_vars)
+        v.update(infovars)
+        v.update(explicit_vars)
         info["variables"] = v
 
-    def listvars( self, url):
-        self.injectvars(url) #add group and instance info into vars
+    def listvars(self, url):
+        self.injectvars(url)  # add group and instance info into vars
         return json.dumps(self.all[url]["variables"])
 
-    def report( self, format="text"):
+    def report(self, format="text"):
         #import pdb; pdb.set_trace()
         for url, info in self.all.items():
             info["groups"] = list( info["groups"])
@@ -142,9 +147,11 @@ server( "%(url)s",
             record = str_format
             yield record % info
 
-def fail( msg, *args):
+
+def fail(msg, *args):
     print msg
     sys.exit(1)
+
 
 def run():
     args = sys.argv
@@ -153,17 +160,18 @@ def run():
         sys.exit(1)
     try:
         hosts = Hosts(all_hosts)
-        if args[1]=="--list":
+        if args[1] == "--list":
             print(hosts.listgroups())
         elif args[1] == "--host":
-            print(hosts.listvars( args[2]))
+            print(hosts.listvars(args[2]))
         elif args[1] == "--report":
             format = "text"
-            print( "\n".join(hosts.report(format)))
+            print("\n".join(hosts.report(format)))
         else:
-            fail( "inventory.py called with bad arguments", args)
+            fail("inventory.py called with bad arguments", args)
     except Exception, e:
-        import traceback; traceback.print_exc()
+        import traceback
+        traceback.print_exc()
         fail("exception in inventory.py %s" % e.message, {})
 
 run()
