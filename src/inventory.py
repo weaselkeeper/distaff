@@ -86,7 +86,6 @@ class Hosts(object):
 #            if bool(groups):
 #                if bool( groups & mygroups):
 #                    pass
-#                    #info[groups] = groups & mygroups #hide groups filtered out?
 #                else:
 #                    return False
             #filter by hostname/url
@@ -130,19 +129,7 @@ class Hosts(object):
     def report(self, format="text"):
         #import pdb; pdb.set_trace()
         for url, info in self.all.items():
-            info["groups"] = list( info["groups"])
-            repr_format = """\
-server( "%(url)s",
-    "name",
-    hostname="%(hostname)s",
-    stage="%(stage)s",
-    provider="%(provider)s",
-    groups=%(groups)r,
-    status="",
-    description="",
-    variables=%(variables)r
-    )
-            """
+            info["groups"] = list(info["groups"])
             str_format = """|%(stage)-5s |%(hostname)-50s |@%(url)s |"""
             record = str_format
             yield record % info
@@ -161,12 +148,12 @@ def run():
     try:
         hosts = Hosts(all_hosts)
         if args[1] == "--list":
-            print(hosts.listgroups())
+            print hosts.listgroups()
         elif args[1] == "--host":
-            print(hosts.listvars(args[2]))
+            print hosts.listvars(args[2])
         elif args[1] == "--report":
             format = "text"
-            print("\n".join(hosts.report(format)))
+            print "\n".join(hosts.report(format))
         else:
             fail("inventory.py called with bad arguments", args)
     except Exception, e:
