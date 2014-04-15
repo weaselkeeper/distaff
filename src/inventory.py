@@ -12,7 +12,6 @@ import logging
 
 
 inventory_data_files = ["hosts.inv"]
-
 all_stages = ["dev", "qa", "prod"]
 all_groups = collections.OrderedDict()
 all_hosts = collections.OrderedDict()
@@ -96,14 +95,6 @@ class Hosts(object):
             # filter by stage
             if s["stage"] not in stages:
                 return False
-#            # filter by groups
-#            mygroups = set(info["groups"])
-#            if bool(groups):
-#                if bool( groups & mygroups):
-#                    pass
-#                else:
-#                    return False
-            #filter by hostname/url
             return fnmatch.fnmatchcase(info["url"], hosts) or fnmatch.fnmatchcase(info["hostname"], hosts)
             #return True
 
@@ -156,6 +147,8 @@ def fail(msg, *args):
 
 
 def run():
+    """ main run section """
+    log.debug('in run()')
     args = sys.argv
     if len(args) < 2:
         print "supply --list, --host <host>, --report"
