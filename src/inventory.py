@@ -161,4 +161,19 @@ def run():
         traceback.print_exc()
         fail("exception in inventory.py %s" % e.message, {})
 
-run()
+
+if name == "__main__":
+    # Called directly
+    import argparse
+    parser = argparse.ArgumentParser(
+        description='Returns results of inventory query')
+    parser.add_argument('-n', '--dryrun', action='store_true',
+        help='Dry run, do not actually perform action', default=False)
+    parser.add_argument('-d', '--debug', action='store_true',
+        help='Enable debugging during execution.', default=None)
+    parser.add_argument('-r', '--readable', action='store_true', default=False,
+        help='Display output in human readable formant (as opposed to json).')
+    parser.add_argument('-c', '--config', action='store', default=None,
+        help='Specify a path to an alternate config file')
+
+    run()
