@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+#
 """Test the external hosts concept."""
 
 PROJECTNAME = 'inventory'
@@ -11,7 +11,7 @@ import fnmatch
 import logging
 
 
-inventory_data_files = ["./hosts.inv"]
+inventory_data_files = ["hosts.inv"]
 
 all_stages = ["dev", "qa", "prod"]
 all_groups = collections.OrderedDict()
@@ -190,5 +190,13 @@ if name == "__main__":
         help='Display output in human readable formant (as opposed to json).')
     parser.add_argument('-c', '--config', action='store', default=None,
         help='Specify a path to an alternate config file')
+
+    args = parser.parse_args()
+    args.usage = PROJECTNAME + ".py [options]"
+
+    if args.debug:
+        log.setLevel(logging.DEBUG)
+    else:
+        log.setLevel(logging.WARN)
 
     run()
