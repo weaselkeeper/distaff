@@ -1,4 +1,4 @@
-server( "00.00.00.1", "hadoop-namenode.corp.sea1.cmates.com",
+server( "00.00.00.1", "hadoop-namenode.corp.sea1.foo.com",
     hostname="hadoop-namenode.corp.foo.com",
     stage="corp",
     provider="hw",

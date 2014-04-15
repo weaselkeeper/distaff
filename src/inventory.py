@@ -2,18 +2,33 @@
 
 """Test the external hosts concept."""
 
+PROJECTNAME = 'inventory'
 import sys
 import os
 import collections
 import json
 import fnmatch
+import logging
 
-inventory_data_files = ["hosts.inv"]
+
+inventory_data_files = ["./hosts.inv"]
 
 all_stages = ["dev", "qa", "prod"]
 all_groups = collections.OrderedDict()
 all_hosts = collections.OrderedDict()
 hosts_by_name = collections.OrderedDict()
+
+# Basic logging setup
+logging.basicConfig(level=logging.WARN,
+                    format='%(asctime)s %(levelname)s - %(message)s',
+                    datefmt='%y.%m.%d %H:%M:%S')
+
+# Setup logging to console by default
+
+console = logging.StreamHandler(sys.stderr)
+console.setLevel(logging.WARN)
+logging.getLogger(PROJECTNAME).addHandler(console)
+log = logging.getLogger(PROJECTNAME)
 
 
 def server(url, name,
