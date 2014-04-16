@@ -51,8 +51,8 @@ def server(url, name,
                   variables=variables)
     all_hosts[url] = result
 
-for name in inventory_data_files:
-    execfile(name)
+#for name in inventory_data_files:
+#    execfile(name)
 
 
 class Hosts(object):
@@ -146,20 +146,20 @@ def fail(msg, *args):
     sys.exit(1)
 
 
-def run():
+def run(_args):
     """ main run section """
     log.debug('in run()')
     args = sys.argv
-    if len(args) < 2:
-        print "supply --list, --host <host>, --report"
+    if not _args.host and not _args.list and not _args.report:
+        print "supply --list, --host <host>, or --report"
         sys.exit(1)
     try:
         hosts = Hosts(all_hosts)
-        if args[1] == "--list":
+        if _args.list:
             print hosts.listgroups()
-        elif args[1] == "--host":
-            print hosts.listvars(args[2])
-        elif args[1] == "--report":
+        elif _args.report:
+            print hosts.listvars(_args.host)
+        elif _args.report:
             format = "text"
             print "\n".join(hosts.report(format))
         else:
@@ -168,6 +168,7 @@ def run():
         import traceback
         traceback.print_exc()
         fail("exception in inventory.py %s" % e.message, {})
+    log.debug('leaving run()')
 
 
 if __name__ == "__main__":
@@ -178,11 +179,15 @@ if __name__ == "__main__":
     parser.add_argument('-n', '--dryrun', action='store_true',
         help='Dry run, do not actually perform action', default=False)
     parser.add_argument('-d', '--debug', action='store_true',
-        help='Enable debugging during execution.', default=None)
-    parser.add_argument('-r', '--readable', action='store_true', default=False,
         help='Display output in human readable formant (as opposed to json).')
     parser.add_argument('-c', '--config', action='store', default=None,
         help='Specify a path to an alternate config file')
+    parser.add_argument('-l', '--list', action='store', help='list',
+        default=None,)
+    parser.add_argument('-r', '--report', action='store_true', help='report',
+        default=None,)
+    parser.add_argument('-H', '--host', action='store', help='Find host')
+
 
     args = parser.parse_args()
     args.usage = PROJECTNAME + ".py [options]"
@@ -192,4 +197,4 @@ if __name__ == "__main__":
     else:
         log.setLevel(logging.WARN)
 
-    run()
+    run(args)
