@@ -170,7 +170,7 @@ def run():
         fail("exception in inventory.py %s" % e.message, {})
 
 
-if name == "__main__":
+if __name__ == "__main__":
     # Called directly
     import argparse
     parser = argparse.ArgumentParser(
