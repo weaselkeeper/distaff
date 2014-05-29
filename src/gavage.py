@@ -114,9 +114,9 @@ def update(col, newhostdata, host):
     """ updating info for host """
     log.debug('in update')
 
-    cursor = collection.find({'_id': host})
+    cursor = col.find({'_id': host})
 
-    collection.update(
+    col.update(
             {'_id': host},
             {'$set': {
                 newhostdata
