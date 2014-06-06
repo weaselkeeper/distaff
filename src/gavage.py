@@ -117,12 +117,8 @@ def update(col, newhostdata, host):
     cursor = col.find({'_id': host})
 
     col.update(
-            {'_id': host},
-            {'$set': {
-                newhostdata
-                    }
-                }, upsert=True
-            )
+        {'_id': host},
+        {'$set': {newhostdata}}, upsert=True)
     return
 
 # Here we start if called directly (the usual case.)
