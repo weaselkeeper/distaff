@@ -108,7 +108,7 @@ def run(_args, CONFIGFILE):
     _args.passwd = configparse.get('gavage', 'passwd')
     log.debug(_args)
     col = connectDB
-
+    log.debug("leaving run")
 
 def update(col, newhostdata, host):
     """ updating info for host """
