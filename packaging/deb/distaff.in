@@ -16,6 +16,7 @@ Copyright: LICENSE
 Readme: README.md
 Files: distaff.conf /etc/distaff
  gavage.py /usr/bin
+ vmMonPoller.py /usr/bin
 
 Description: Simple inventory system, using mongodb for storage
  push information from a host, into a monogodb for inventory usage
