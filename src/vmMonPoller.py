@@ -52,7 +52,9 @@ from twisted.protocols.basic import LineReceiver
 
 # Setup logging
 logging.basicConfig(level=logging.WARN,
-                    format='%(asctime)s %(levelname)s - %(messagedistaffdatefmt='%y.%m.%d %H:%M:%S')
+                    format='%(asctime)s %(levelname)s - %(message)s',
+                    datefmt='%y.%m.%d %H:%M:%S')
+
 
 # Setup logging to console.
 console = logging.StreamHandler(sys.stderr)
