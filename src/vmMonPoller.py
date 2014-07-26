@@ -108,12 +108,12 @@ def run(_args):
     return
 
 
-def ssl_conn(ssl_host, ssl_cert, ssl_clientuser, ssl_cacerts):
+def ssl_conn(ssl_host, ssl_clientuser, ssl_cacerts, ssl_cert='keyfile.pem'):
     """ Make an ssl connection, and return it to calling function """
     log.debug('in ssl_conn with %s', ssl_host)
     factory = ConnClientFactory()
     try:
-        with open('keyfile.pem') as keyFile:
+        with open(ssl_cert) as keyFile:
             with open('server.crt') as certFile:
                 clientCert = ssl.PrivateCertificate.loadPEM(
                     keyFile.read() + certFile.read())
