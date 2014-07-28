@@ -61,7 +61,8 @@ def run(_args):
     """ Do, whatever it is, we do. """
     # parse config
     parsed_config = get_config(_args)
-    print parsed_config
+    for key in parsed_config.keys():
+        print key, parsed_config[key]
     log.debug((_args, parsed_config))
     return
 
