@@ -38,7 +38,7 @@ Author: Jim Richardson
 email: weaselkeeper@gmail.com
 
 """
-PROJECTNAME = 'hostscraper'
+PROJECTNAME = 'distaff'
 import os
 import sys
 import ConfigParser
@@ -82,7 +82,7 @@ def get_options():
                         help='Display output in human readable formant.')
     parser.add_argument('-c', '--config', action='store', default=None,
                         help='Specify a path to an alternate config file')
-    parser.add_argument('-s', '--someoption', action='store', dest='SOMEOPTION',
+    parser.add_argument('-s', '--srcurl', action='store', dest='SOURCEURL',
                         help='bogus option for explanations')
 
     _args = parser.parse_args()
@@ -108,12 +108,13 @@ def get_config(_args):
 
     parser.read(_config)
 
-    if _args.SOMEOPTION:
-        configuration['SOMEOPTION'] = _args.SOMEOPTION
+    if _args.SOURCEURL:
+        configuration['SOURCEURL'] = _args.SOURCEURL
     else:
-        configuration['SOMEOPTION'] = parser.get('CONFIGSECTION', 'SOMEOPTION')
-    log.debug('Doing things with %s', configuration['SOMEOPTION'])
+        configuration['SOURCEURL'] = parser.get('hostscraper', 'SOURCEURL')
+    log.debug('Doing things with %s', configuration['SOURCEURL'])
     log.debug('leaving get_config')
+    print configuration
     return configuration
 
 def get_args():
