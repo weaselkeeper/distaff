@@ -84,6 +84,9 @@ def get_options():
                         help='Specify a path to an alternate config file')
     parser.add_argument('-s', '--srcurl', action='store', dest='SOURCEURL',
                         help='bogus option for explanations')
+    parser.add_argument('-q', '--query', action='store', dest='QUERY',
+                        help='bogus option for explanations')
+
 
     _args = parser.parse_args()
     _args.usage = PROJECTNAME + ".py [options]"
@@ -112,9 +115,13 @@ def get_config(_args):
         configuration['SOURCEURL'] = _args.SOURCEURL
     else:
         configuration['SOURCEURL'] = parser.get('hostscraper', 'SOURCEURL')
+
+    if _args.QUERY:
+        configuration['QUERY'] = _args.QUERY
+    else:
+        configuration['QUERY'] = parser.get('hostscraper', 'QUERY')
     log.debug('Doing things with %s', configuration['SOURCEURL'])
     log.debug('leaving get_config')
-    print configuration
     return configuration
 
 def get_args():
