@@ -43,7 +43,9 @@ import os
 import sys
 import ConfigParser
 import logging
-
+import re
+import urllib
+from BeautifulSoup import BeautifulSoup as BS
 
 # Setup logging
 logging.basicConfig(level=logging.WARN,
@@ -61,10 +63,23 @@ def run(_args):
     """ Do, whatever it is, we do. """
     # parse config
     parsed_config = get_config(_args)
-    for key in parsed_config.keys():
-        print key, parsed_config[key]
+    URL = parsed_config['SOURCEURL']
+    QUERY = parsed_config['QUERY']
+    result = urllib.urlopen(URL).read()
+    
     log.debug((_args, parsed_config))
+    get_hostnames(result,QUERY)
     return
+
+def get_hostnames(data, QUERY):
+    """ Extract the hostnames """
+    soup = BS(data)
+    table = soup.find("table", attrs={"class":"table table-striped"})
+    datasets = []
+    print table
+    for row in table.find_all("td"):
+        print row
+    print datasets
 
 
 def get_options():
