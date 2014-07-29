@@ -45,7 +45,7 @@ import ConfigParser
 import logging
 import re
 import urllib
-from BeautifulSoup import BeautifulSoup as BS
+from bs4 import BeautifulSoup as BS
 
 # Setup logging
 logging.basicConfig(level=logging.WARN,
@@ -75,11 +75,10 @@ def get_hostnames(data, QUERY):
     """ Extract the hostnames """
     soup = BS(data)
     table = soup.find("table", attrs={"class":"table table-striped"})
+    regex = re.compile(QUERY)
     datasets = []
-    print table
     for row in table.find_all("td"):
         print row
-    print datasets
 
 
 def get_options():
