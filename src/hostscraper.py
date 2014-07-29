@@ -77,8 +77,8 @@ def get_hostnames(data, QUERY):
     table = soup.find("table", attrs={"class":"table table-striped"})
     regex = re.compile(QUERY)
     datasets = []
-    for row in table.find_all("td"):
-        print row
+    for row in table.find_all(href=re.compile("mosaic.marchex.com")):
+        print row.contents[0]
 
 
 def get_options():
