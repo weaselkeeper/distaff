@@ -70,17 +70,16 @@ def run(_args):
     URL = parsed_config['SOURCEURL']
     QUERY = parsed_config['QUERY']
     result = urllib.urlopen(URL).read()
-    
+
     log.debug((_args, parsed_config))
-    get_hostnames(result,QUERY)
+    get_hostnames(result, QUERY)
     return
+
 
 def get_hostnames(data, QUERY):
     """ Extract the hostnames """
     soup = BS(data)
-    table = soup.find("table", attrs={"class":"table table-striped"})
-    regex = re.compile(QUERY)
-    datasets = []
+    table = soup.find("table", attrs={"class": "table table-striped"})
     for row in table.find_all(href=re.compile("mosaic.marchex.com")):
         print row.contents[0]
 
@@ -105,7 +104,6 @@ def get_options():
                         help='bogus option for explanations')
     parser.add_argument('-q', '--query', action='store', dest='QUERY',
                         help='bogus option for explanations')
-
 
     _args = parser.parse_args()
     _args.usage = PROJECTNAME + ".py [options]"
@@ -142,6 +140,7 @@ def get_config(_args):
     log.debug('Doing things with %s', configuration['SOURCEURL'])
     log.debug('leaving get_config')
     return configuration
+
 
 def get_args():
     """ we only run if called from main """
