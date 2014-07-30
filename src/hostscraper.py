@@ -80,7 +80,8 @@ def get_hostnames(data, QUERY):
     """ Extract the hostnames """
     soup = BS(data)
     table = soup.find("table", attrs={"class": "table table-striped"})
-    for row in table.find_all(href=re.compile("mosaic.marchex.com")):
+    print QUERY
+    for row in table.find_all(href=re.compile(QUERY)):
         print row.contents[0]
 
 
