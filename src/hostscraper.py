@@ -45,7 +45,11 @@ import ConfigParser
 import logging
 import re
 import urllib
-from bs4 import BeautifulSoup as BS
+
+try:
+    from bs4 import BeautifulSoup as BS
+except ImportError:
+    print """ Please ensure availablility of python-bs4 module """
 
 # Setup logging
 logging.basicConfig(level=logging.WARN,
