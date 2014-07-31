@@ -65,6 +65,7 @@ log = logging.getLogger(PROJECTNAME)
 
 def run(_args):
     """ Do, whatever it is, we do. """
+    log.debug('in run function')
     # parse config
     parsed_config = get_config(_args)
     URL = parsed_config['SOURCEURL']
@@ -73,16 +74,19 @@ def run(_args):
 
     log.debug((_args, parsed_config))
     get_hostnames(result, QUERY)
+    log.debug('leaving run')
     return
 
 
 def get_hostnames(data, QUERY):
     """ Extract the hostnames """
+    log.debug('in get_hostnames extracting hostnames from datastream')
     soup = BS(data)
     table = soup.find("table", attrs={"class": "table table-striped"})
     print QUERY
     for row in table.find_all(href=re.compile(QUERY)):
         print row.contents[0]
+    log.debug('leaving get_hostnames')
 
 
 def get_options():
