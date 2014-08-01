@@ -60,33 +60,33 @@ logging.basicConfig(level=logging.WARN,
 console = logging.StreamHandler(sys.stderr)
 console.setLevel(logging.WARN)
 logging.getLogger(PROJECTNAME).addHandler(console)
-log = logging.getLogger(PROJECTNAME)
+LOG = logging.getLogger(PROJECTNAME)
 
 
 def run(_args):
     """ Do, whatever it is, we do. """
-    log.debug('in run function')
+    LOG.debug('in run function')
     # parse config
     parsed_config = get_config(_args)
     _url = parsed_config['SOURCEURL']
     query = parsed_config['QUERY']
     result = urllib.urlopen(_url).read()
 
-    log.debug((_args, parsed_config))
+    LOG.debug((_args, parsed_config))
     get_hostnames(result, query)
-    log.debug('leaving run')
+    LOG.debug('leaving run')
     return
 
 
 def get_hostnames(data, query):
     """ Extract the hostnames """
-    log.debug('in get_hostnames extracting hostnames from datastream')
+    LOG.debug('in get_hostnames extracting hostnames from datastream')
     soup = BS(data)
     table = soup.find("table", attrs={"class": "table table-striped"})
     print query
     for row in table.find_all(href=re.compile(query)):
         print row.contents[0]
-    log.debug('leaving get_hostnames')
+    LOG.debug('leaving get_hostnames')
 
 
 def get_options():
@@ -118,7 +118,7 @@ def get_options():
 
 def get_config(_args):
     """ Now parse the config file.  Get any and all info from config file."""
-    log.debug('Now in get_config')
+    LOG.debug('Now in get_config')
     parser = ConfigParser.SafeConfigParser()
     configuration = {}
     configfile = os.path.join('/etc', PROJECTNAME, PROJECTNAME + '.conf')
@@ -128,7 +128,7 @@ def get_config(_args):
         if os.path.isfile(configfile):
             _config = configfile
         else:
-            log.warn('No config file found at %s', configfile)
+            LOG.warn('No config file found at %s', configfile)
             sys.exit(1)
 
     parser.read(_config)
@@ -142,8 +142,8 @@ def get_config(_args):
         configuration['QUERY'] = _args.QUERY
     else:
         configuration['QUERY'] = parser.get('hostscraper', 'QUERY')
-    log.debug('Doing things with %s', configuration['SOURCEURL'])
-    log.debug('leaving get_config')
+    LOG.debug('Doing things with %s', configuration['SOURCEURL'])
+    LOG.debug('leaving get_config')
     return configuration
 
 
@@ -152,9 +152,9 @@ def get_args():
     _args = get_options()
 
     if _args.debug:
-        log.setLevel(logging.DEBUG)
+        LOG.setLevel(logging.DEBUG)
     else:
-        log.setLevel(logging.WARN)
+        LOG.setLevel(logging.WARN)
     return _args
 
 
