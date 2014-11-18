@@ -4,8 +4,6 @@ distaff
 Simple system inventory, track your servers, how much ram, what packages, etc.
 Written in python, with mongodb as a backend.
 
-
-.
 ├── config
 │   └── distaff.conf
 ├── LICENSE
@@ -19,6 +17,10 @@ Written in python, with mongodb as a backend.
 │       └── distaff.spec.in
 ├── README.md
 └── src
-    └── gavage.py  (Stuffs data into the collection)
+    ├── gavage.py       Shove info into DB
+    ├── hostscraper.py  Scrape info
+    └── vmMonPoller.py  Pull info from opscode hosted chef
+
+5 directories, 11 files
 
 5 directories, 9 files
