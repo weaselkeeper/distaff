@@ -79,7 +79,10 @@ def connectDB(_args):
     collection = _args.collection
     log.debug("Using collection name %s", collection)
     con = Connection(host)
-    col = con[database][collection]
+    try:
+        col = con[database][collection]
+    except:
+        log.info('Failed to open connection to %s'. database)
     log.debug('selecting database/collection: %s/%s',
               database, collection)
     return col
