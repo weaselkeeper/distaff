@@ -82,7 +82,7 @@ def connectDB(_args):
     try:
         col = con[database][collection]
     except:
-        log.info('Failed to open connection to %s'. database)
+        log.info('Failed to open connection to %s', database)
     log.debug('selecting database/collection: %s/%s',
               database, collection)
     return col
