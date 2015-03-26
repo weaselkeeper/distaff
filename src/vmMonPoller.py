@@ -69,6 +69,7 @@ class ConnClient(LineReceiver):
         self.end = "Bye-bye!"
 
     def connectionMade(self):
+        """ opening the connection """
         self.sendLine("GET / HTTP/1.1\r\nHost: api.opscode.com \r\n\r\n")
         self.sendLine(self.end)
 
@@ -77,6 +78,7 @@ class ConnClient(LineReceiver):
         print 'connection lost (protocol)'
 
     def lineReceived(self, line):
+        """ Read a line, and if eol, end connection """
         print "receive:", line
         if line == self.end:
             self.transport.loseConnection()
