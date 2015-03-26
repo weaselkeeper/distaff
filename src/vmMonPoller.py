@@ -73,6 +73,7 @@ class ConnClient(LineReceiver):
         self.sendLine(self.end)
 
     def connectionLost(self, reason):
+        """ Handle a lost connection """
         print 'connection lost (protocol)'
 
     def lineReceived(self, line):
