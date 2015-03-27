@@ -89,10 +89,12 @@ class ConnClientFactory(ClientFactory):
         self.protocol = ConnClient
 
     def clientConnectionFailed(self, connector, reason):
+        """ Deal with failed connection"""
         print 'connection failed:', reason.getErrorMessage()
         reactor.stop()
 
     def clientConnectionLost(self, connector, reason):
+        """ Deal with lost connection """
         print 'connection lost:', reason.getErrorMessage()
         reactor.stop()
 
