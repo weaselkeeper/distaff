@@ -133,15 +133,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='Someproject does something')
     parser.add_argument('-n', '--dryrun', action='store_true',
-        help='Dry run, do not actually perform action', default=False)
+                        help='Dry run, do not actually perform action',
+                        default=False)
     parser.add_argument('-d', '--debug', action='store_true',
-        help='Enable debugging during execution.', default=None)
+                        help='Enable debugging during execution.', default=None)
     parser.add_argument('-r', '--readable', action='store_true', default=False,
-        help='Display output in human readable formant (as opposed to json).')
+                        help='Display output in human readable formant \
+                        (as opposed to json).')
     parser.add_argument('-c', '--config', action='store', default=None,
-        help='Specify a path to an alternate config file')
+                        help='Specify a path to an alternate config file')
     parser.add_argument('-m', '--mongohost', action='store',
-        help='Host that holds the mongodb collections')
+                        help='Host that holds the mongodb collections')
 
     args = parser.parse_args()
     args.usage = PROJECTNAME + ".py [options]"
