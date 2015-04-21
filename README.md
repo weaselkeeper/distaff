@@ -3,6 +3,8 @@ distaff
 
 Simple system inventory, track your servers, how much ram, what packages, etc.
 Written in python, with mongodb as a backend.
+Limited functionality so far.
+
 
 ├── config
 │   └── distaff.conf
